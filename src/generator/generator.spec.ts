@@ -1,11 +1,11 @@
 import "mocha"
 import { expect } from "chai";
-import wordsAnalyser from "../matrixCompiler/wordAnalyser";
+import wordsAnalyser from "../dictionnary/wordAnalyser";
 import generator from "./generator";
 
 describe("generator", () => {
     it("should always return bonjour", () => {
-        let analyser: wordsAnalyser = new wordsAnalyser();
+        let analyser: wordsAnalyser = new wordsAnalyser(undefined);
         analyser.wordAnalyse("bonjour");
 
         let gen = new generator(analyser.getTransitionMatrix());
@@ -33,7 +33,7 @@ describe("generator", () => {
 
     it("every transition should be contains inside a word", () => {
         const words: string[] = ["bonjour", "comment", "allez", "vous", "aujourd","hui", "content", "être", "ici", "bas", "abdiquer", "nous", "devons", "dit", "le", "roi", "en", "ce", "jeudi"];
-        let analyser: wordsAnalyser = new wordsAnalyser();
+        let analyser: wordsAnalyser = new wordsAnalyser(undefined);
         analyser.analyseWords(words);
 
         let gen = new generator(analyser.getTransitionMatrix());
@@ -44,7 +44,7 @@ describe("generator", () => {
     });
 
     it("should return nothing if matrix is empty", () => {
-        let analyser: wordsAnalyser = new wordsAnalyser();
+        let analyser: wordsAnalyser = new wordsAnalyser(undefined);
         let gen = new generator(analyser.getTransitionMatrix());
         let emptyRes:string[] = gen.compute(100);
         emptyRes.forEach((elem) => {

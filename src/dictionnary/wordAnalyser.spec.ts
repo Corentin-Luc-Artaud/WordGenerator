@@ -1,17 +1,23 @@
 import "mocha"
-import { expect } from "chai";
-import wordsAnalyser from "../matrixCompiler/wordAnalyser";
-import {serializeMatrix, deserialiseMatrix}  from "./matrixToText";
+import { expect } from "chai"
+import wordsAnalyser from "./wordAnalyser";
 import { begin, end } from "../consts";
 
 
-describe("matrix to text", () => {
-    it("should be reversed",() => {
-        let analyser:wordsAnalyser = new wordsAnalyser();
-        analyser.wordAnalyse("bonjour");
-        let serialized: string = serializeMatrix(analyser.getTransitionMatrix());
+describe("WordAnalyser", () => {
+    it("should be empty", () => {
+        let analyser: wordsAnalyser = new wordsAnalyser(undefined);
+        let res = analyser.getTransitionMatrix();
+        expect(res.get(begin)).to.equals(undefined);
+    });
 
-        let res = deserialiseMatrix(serialized);
+    it("should correspond to { begin => b, beginb => o , bo => n, on => j, nj => o, jo => u, ou => r, ur => end }",() => {
+        let word: string = "bonjour";
+        let analyser: wordsAnalyser = new wordsAnalyser(undefined);
+
+        analyser.wordAnalyse(word);
+        
+        let res = analyser.getTransitionMatrix();
 
         let beginTrans = res.get(begin);
         expect(beginTrans).to.be.not.undefined;
@@ -44,6 +50,6 @@ describe("matrix to text", () => {
         let urTrans = res.get("ur");
         expect(urTrans).to.be.not.undefined;
         expect(urTrans != undefined ? urTrans.get(end) || 0: 0).to.be.equals(100);
-
+    
     });
-})
+});

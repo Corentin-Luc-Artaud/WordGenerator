@@ -37,7 +37,7 @@ export default class generator {
         for (let i = 0; i < n; ++i) {
             res.push(this.createWord());
         }
-        return res;
+        return res.sort();
     }
 
 }

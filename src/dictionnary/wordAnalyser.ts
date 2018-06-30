@@ -1,13 +1,21 @@
 import {end, begin} from "../consts"
+import { TransitionsMap } from "./types";
+
 
 /**
  * analyze words and create a transition matrix
  */
 export default class wordsAnalyser {
-    private markovMatrix: Map<string, Map<string, number>>
+    /**
+     * contains the numbers of each transitions
+     */
+    private markovMatrix: TransitionsMap;
 
-    constructor () {
-        this.markovMatrix = new Map();
+    constructor (markovMatrix: TransitionsMap | undefined) {
+        if (markovMatrix == undefined)
+            this.markovMatrix = new TransitionsMap;
+        else 
+            this.markovMatrix = markovMatrix;
     }
 
     /**
